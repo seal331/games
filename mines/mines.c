@@ -3,23 +3,31 @@
 #include <time.h>
 #include <ncurses.h>
 #include <string.h>
+#include "config.h"
 
+// config option sanity checks
+#if (MINES < 1)
+	#error "mine amount cannot be negative or zero"
+#endif
 
-/* BEGIN CONFIG */
-// grid size
-#define Y 16
-#define X 16
+#if (Y < 1)
+        #error "height cannot be negative or zero"
+#endif
 
-// number of mines
-#define MINES 35
+#if (X < 1)
+        #error "width cannot be negative or zero"
+#endif
 
-// reverse the highlighting of squares
-#define HIGHLIGHT_SQUARES true
-/* END CONFIG */
+#if (HIGHLIGHT_SQUARES != true) && (HIGHLIGHT_SQUARES != false)
+	#error "garbage in HIGHLIGHT_SQUARES"
+#endif
 
+# if (MINES > X * Y)
+	#error "too many mines"
+#endif
+// config option sanity checks end here
 
 #define ARRLEN(a) (sizeof(a)/sizeof(*a))
-
 
 enum color {
 	RED = 1,

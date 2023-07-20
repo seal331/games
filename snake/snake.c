@@ -4,19 +4,25 @@
 #include <ncurses.h>
 #include <stdbool.h>
 #include <sys/time.h>
+#include "config.h"
 
+// config option sanity checks
+#if (DELAY < 1)
+        #error "delay cannot be negative or zero"
+#endif
 
-/* BEGIN CONFIG */
-#define Y 16
-#define X 32
+#if (Y < 2)
+        #error "height cannot be negative or less than 2"
+#endif
 
-// time between movements (ms)
-#define DELAY 100
+#if (X < 2)
+        #error "width cannot be negative or less than 2"
+#endif
 
-// enable or disable solid walls
-#define WALLS false
-/* END CONFIG */
-
+#if (WALLS != true) && (WALLS != false)
+        #error "garbage in WALLS"
+#endif
+// config option sanity checks end here
 
 #if WALLS
 #define WALLC '#'
